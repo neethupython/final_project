@@ -1,0 +1,15 @@
+<!-- core/templates/core/home.html -->
+
+{% extends 'base.html' %}
+{% block content %}
+  <div class="container">
+    <h1>Welcome to the ABC Book Store</h1>
+    <p>ABC is proud to offer electronic ordering and payments for athletics, fundraising,
+      lunches, school events, spiritwear, memberships, and more! Click on the appropriate
+      category on the left to order and pay! If you have an item you would like posted to
+      the school store, please fill out the
+      <a href="{% url 'new_page' %}" class="btn btn-primary">ABC Book Store Form</a>.</p>
+</div>
+
+{% endblock %}
+

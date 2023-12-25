@@ -1,0 +1,50 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Your Title{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">    <!-- Additional CSS files or styles specific to the base template go here -->
+</head>
+<body>
+    <center><img src="{% static 'img/logo1.png' %}" alt="Logo" class="logo-img"></center>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active"><a href="{% url 'home' %}">Home</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <li class="nav-item dropdown">
+                <select id="department-dropdown" name="department" onchange="redirectToWikipedia(this)">
+                    <option value="" selected disabled>Select Department</option>
+                    {% for department in departments %}
+                        <option value="{{ department.id }}" data-url="{% url 'department_wikipedia' department_id=department.id %}">{{ department.name }}</option>
+                    {% endfor %}
+                </select>
+            </li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <li class="nav-item active"><a href="{% url 'login' %}">Login</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <li class="nav-item active"><a href="{% url 'register' %}">Register</a></li>
+        </ul>
+    </div>
+</nav>
+</div>
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <script src="{% static 'js/script.js' %}"></script>
+    <script>
+    function redirectToWikipedia(selectElement) {
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+        var departmentUrl = selectedOption.getAttribute('data-url');
+
+        // Redirect to the department's Wikipedia URL
+        window.location.href = departmentUrl;
+    }
+</script>
+
+    <!-- Add your JavaScript scripts or link to external scripts here -->
+</body>
+</html>

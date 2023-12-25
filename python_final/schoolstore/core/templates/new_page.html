@@ -1,0 +1,42 @@
+<!-- core/templates/core/new_page.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<br><br>
+<form method="post" action="{% url 'new_page' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+$(document).ready(function () {
+    $('#id_department').change(function () {
+        var departmentId = $(this).val();
+
+        $.ajax({
+            url: '/get_courses/',
+            data: {
+                'department_id': departmentId
+            },
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);  // Add this line to log data to the console
+                var coursesDropdown = $('#id_course');
+                coursesDropdown.empty();
+
+                $.each(data, function (index, course) {
+                    coursesDropdown.append($('<option></option>').attr('value', course.id).text(course.name));
+                });
+            }
+        });
+    });
+
+    // Check if a message is present in the context
+    {% if message %}
+        alert("{{ message }}");
+    {% endif %}
+});
+</script>
+{% endblock %}
